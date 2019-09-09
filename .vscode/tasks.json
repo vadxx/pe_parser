@@ -6,13 +6,13 @@
         {
             "label": "configure",
             "type": "shell",
-            "command": "./scripts/configure.sh",
+            "command": "cd scripts && ./configure.sh",
             "problemMatcher": []
         },
         {
             "label": "build",
             "type": "shell",
-            "command": "./scripts/build.sh",
+            "command": "cd scripts && ./build.sh",
             "group":{
                 "kind": "build",
                 "isDefault": true
@@ -23,7 +23,7 @@
             "label": "run",
             "dependsOn": ["build"],
             "type": "shell",
-            "command": "./scripts/run.sh",
+            "command": "cd scripts && ./run.sh",
             "problemMatcher": ["$gcc"]
         }
     ]

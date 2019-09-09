@@ -1,3 +1,4 @@
 #!/bin/bash
-cd ./build &&
-cmake --build  . -j --target install 
+cd ../build &&
+cmake .. && 
+make && make install

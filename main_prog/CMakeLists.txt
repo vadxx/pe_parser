@@ -2,7 +2,7 @@ project(main_prog)
 
 add_executable(${PROJECT_NAME}
     # MAIN
-    ${PROJECT_SOURCE_DIR}/src/main.cc
+    ${PROJECT_SOURCE_DIR}/src/main.cpp
 )
 
 target_include_directories(${PROJECT_NAME}

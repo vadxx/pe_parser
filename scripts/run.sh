@@ -1,3 +1,3 @@
 #!/bin/bash
-cd ./released_bins &&
+cd ../release &&
 ./main_prog ../data/putty.exe

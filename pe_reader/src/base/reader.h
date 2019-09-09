@@ -3,25 +3,27 @@
 */
 #pragma once
 #include <cstdint>
-#include <string>
 #include <fstream>  // for file-access
-
-typedef uint32_t DWORD;
-typedef uint32_t UINT;
-typedef uint16_t WORD;
-typedef uint8_t BYTE;
-typedef uint8_t BOOL;
+#include <string>
+#include "src/types.h"
 
 class Reader {
  protected:
     std::ifstream file;
+    ptStr buff;
+    size_t offset;
 
-    BOOL read_file(const std::string& fp);
-    std::string read_line();
+    BOOL get_header(
+        const size_t& offset = 0, const size_t& size = 0,
+        const BOOL& printable = false);
+
+    DWORD get_len_file();
+
+    size_t get_data();
 
  public:
-    Reader(/* args */);
+     Reader();
     ~Reader();
 
-    BOOL init(const std::string& fp);
+    virtual BOOL init(const std::string& fp);
 };

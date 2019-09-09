@@ -2,10 +2,8 @@ project(_pe_reader)
 
 add_library(${PROJECT_NAME}
     STATIC
-    # BASE
-    ${PROJECT_SOURCE_DIR}/src/base/reader.cc
-
-    ${PROJECT_SOURCE_DIR}/src/pe_reader.cc
+    ${PROJECT_SOURCE_DIR}/src/base/reader.cpp
+    ${PROJECT_SOURCE_DIR}/src/pe_reader.cpp
 )
 add_library(static::pe ALIAS ${PROJECT_NAME})
 

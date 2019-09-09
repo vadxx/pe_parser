@@ -1,17 +1,14 @@
 cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
 project(BIN_ANALYSE)
+set(CMAKE_CXX_STANDARD 11)
 
-set_target_properties(${TARGET} PROPERTIES
-    CXX_STANDARD 11
-    CXX_STANDARD_REQUIRED YES
-)
-set(CMAKE_INSTALL_PREFIX ${PROJECT_BINARY_DIR}/../released_bins)
+set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR}/release)
 include_guard()
 
 add_subdirectory(main_prog)
 add_subdirectory(pe_reader)
 
-# Copy main binary file from /build to /released_bins
+# Copy main binary file from /build to /release
 install(FILES
     ${PROJECT_BINARY_DIR}/main_prog/main_prog
     DESTINATION ${CMAKE_INSTALL_PREFIX}
