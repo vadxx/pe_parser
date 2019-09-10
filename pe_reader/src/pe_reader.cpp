@@ -4,33 +4,35 @@
 */
 #include "src/pe_reader.h"
 #include <iostream>
-#include <string>
-#include <map>
 
 using std::cout;
 using std::endl;
 using std::hex;
-using std::string;
-using std::map;
-
-const int sz_File_Header = 20;
 
 struct Data_Dir {
     DWORD VirtAddr;
     DWORD Size;
 };
+
+const int sz_File_Header = 20;
 const int NUM_DIR_ENTRIES = 16;
 const int SZ_OF_SHORT_NAMES = 8;
 
-PE_Reader::PE_Reader()
-  : Reader(),
-    pe_offset(0) {}
+PE_Reader::PE_Reader() : Reader() {}
 PE_Reader::~PE_Reader() {}
+
+BOOL PE_Reader::test() {
+    read_signature();
+    read_file_header();
+    read_sections();
+    get_sections();
+    return true;
+}
 
 BOOL PE_Reader::read_signature() {
     auto offset = 0x3c;  // e_lfnew
     get_header(offset, sizeof(DWORD));
-    pe_offset = get_data();  // 0x78
+    pe_offset = static_cast<BYTE>(*buff->data());
     cout << "PE Offset: " << hex << pe_offset << " ";
     get_header(pe_offset, sizeof(DWORD), true);  // PE
     cout << endl;
@@ -39,22 +41,41 @@ BOOL PE_Reader::read_signature() {
 
 BOOL PE_Reader::read_sections() {
     auto offset = sect_hdr_offset;
-    cout << "Sections: ";
-
-    std::map <size_t, string> sects;
+    vpSects.resize(num_of_sects);
+    // parse sections
     for (size_t i = 0; i < num_of_sects; i++) {
         get_header(offset, sizeof(BYTE) * SZ_OF_SHORT_NAMES);
-        sects[i] = *buff;
+        // fill structure
+        Section sect;
+        sect.id = i;
+        sect.name = *buff;
+        sect.offset = offset;
+        // send to vec
+        // auto pSect = std::make_shared<Section>(sect);
+        vpSects.at(i) = sect;
+        // go next
         offset += 0x28;
-    }  // .text .rdata .data .00cfg .gfids .rsrc .reloc etc
-    for (auto&& i : sects) {
-        cout << ' ' << i.second;
     }
+    return true;
+}
 
+BOOL PE_Reader::get_sections() {
+    cout << "Sections: " << endl;
+    cout << "ID  Name\tOffset" << endl;
+    for (auto &&i : vpSects) {
+        cout << i.id << "  " << i.name << "\t";
+        cout << hex << i.offset << endl;
+
+        // if (i.id == 3) {  // OK
+        if (i.name.compare(".idata") == 0) {  // Not OK (
+            cout << "HELLO!" << endl;
+        }
+    }
     return true;
 }
 
 BOOL PE_Reader::read_import_table() {
+    cout << "HELLO" << endl;
     return false;
 }
 

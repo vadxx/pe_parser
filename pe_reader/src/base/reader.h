@@ -26,4 +26,5 @@ class Reader {
     ~Reader();
 
     virtual BOOL init(const std::string& fp);
+    virtual BOOL test(); // empty
 };

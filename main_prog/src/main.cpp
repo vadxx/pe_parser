@@ -20,10 +20,7 @@ int main(int argc, const char* argv[]) {
             cout << "ERROR Init! Exiting..." << endl;
             return -1;
         } else {
-            rdr.read_signature();
-            rdr.read_file_header();
-            rdr.read_sections();
-
+            rdr.test();
             cout << endl << "OK!" << endl;
         }
     }

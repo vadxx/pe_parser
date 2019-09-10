@@ -22,6 +22,11 @@ BOOL Reader::init(const string& fp) {
     return true;
 }
 
+BOOL Reader::test() {
+    cout << "Oops! Empty!" << endl;
+    return false;
+}
+
 BOOL Reader::get_header(
     const size_t& offset, const size_t& size,
     const BOOL& printable) {
